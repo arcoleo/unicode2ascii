@@ -1,0 +1,5 @@
+Convert Unicode to ASCII
+
+There are several ways of doing this already, but until I figure them all out, this is what I want.
+
+Primary motivation is to *gracefully* degrade unicode to ascii.
