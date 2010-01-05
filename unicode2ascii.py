@@ -119,6 +119,7 @@ def write_file_helper(options, source, destination, converted_text):
 if __name__ == '__main__':
     options, sources, destination = init_params()
     for source in sources:
+        print ('source', source)
         source_file = open_source(source)
         source_text = read_file(source_file)
         converted_text = unicode_to_ascii(source_text)
