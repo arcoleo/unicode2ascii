@@ -5,6 +5,7 @@ from optparse import OptionParser
 import gzip
 import zipfile
 import unicodedata
+from os.path import basename, join
 
 ENCODE_NORMALIZE_OPTIONS = ('NFC', 'NFKC', 'NFD', 'NFKD')
 ENCODE_NORMALIZE = ENCODE_NORMALIZE_OPTIONS[3]
@@ -98,13 +99,20 @@ def strip_ending(destination):
         
 def write_file_helper(options, source, destination, converted_text):
     print ('begin', 'write_file')
+    print ('source', source)
+    print ('destination', destination)
     if options.strip_ending:
         destination = strip_ending(source)
         dest_fp = open(destination, 'w')
         dest_fp.write(converted_text)
         dest_fp.close()
-    elif options.inplace:
-        destination = source
+    elif options.inplace or destination:
+        if options.inplace:
+            destination = source
+        else:
+            destination = join(destination, basename(source))
+            print 'Dest:', destination
+            
         if source.endswith(FILE_TYPES['gz']):
             dest_fp = gzip.open(destination, 'wb')
             dest_fp.write(converted_text)
